@@ -10,7 +10,7 @@ matrix:
 
 addons:
   sonarcloud:
-    organization: exasol
+    organization: areto
 
 before_script:
   - tools/version.sh verify

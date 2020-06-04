@@ -21,7 +21,7 @@ import com.exasol.adapter.jdbc.*;
 /**
  * This class implements the SQL dialect of Snowflake.
  *
- * @see <a href="https://snowflake.com/">SNOWFLAKE</a>
+ * @see <a href="https://snowflake.com/">Snowflake</a>
  */
 public class SnowflakeSqlDialect extends AbstractSqlDialect {
     static final String NAME = "SNOWFLAKE";
@@ -31,8 +31,8 @@ public class SnowflakeSqlDialect extends AbstractSqlDialect {
         return Capabilities.builder()
                 .addMain(SELECTLIST_PROJECTION, SELECTLIST_EXPRESSIONS, FILTER_EXPRESSIONS, AGGREGATE_SINGLE_GROUP,
                         AGGREGATE_GROUP_BY_COLUMN, AGGREGATE_GROUP_BY_EXPRESSION, AGGREGATE_GROUP_BY_TUPLE,
-                        AGGREGATE_HAVING, ORDER_BY_COLUMN, ORDER_BY_EXPRESSION, LIMIT)
-                .addLiteral(NULL, BOOL, DATE, TIMESTAMP, TIMESTAMP_UTC, DOUBLE, EXACTNUMERIC, STRING, INTERVAL)
+                        AGGREGATE_HAVING, ORDER_BY_COLUMN, ORDER_BY_EXPRESSION, LIMIT) //
+                .addLiteral(NULL, BOOL, DATE, TIMESTAMP, TIMESTAMP_UTC, DOUBLE, EXACTNUMERIC, STRING, INTERVAL) //
                 .addPredicate(AND, OR, NOT, EQUAL, NOTEQUAL, LESS, LESSEQUAL, LIKE, REGEXP_LIKE, BETWEEN, IS_NULL,
                         IS_NOT_NULL)
                 .addScalarFunction(CAST, ABS, CEIL, ACOS, ASIN, ATAN, ATAN2, COS, COSH, DEGREES, EXP, FLOOR, LN, LOG,
@@ -120,15 +120,19 @@ public class SnowflakeSqlDialect extends AbstractSqlDialect {
 
     @Override
     protected QueryRewriter createQueryRewriter() {
-        return new BaseQueryRewriter(this, this.createRemoteMetadataReader(), this.connectionFactory);
+        return new BaseQueryRewriter(this, createRemoteMetadataReader(), this.connectionFactory);
     }
 
     @Override
     public String getStringLiteral(final String value) {
-        final StringBuilder builder = new StringBuilder("'");
-        builder.append(value.replace("'", "''"));
-        builder.append("'");
-        return builder.toString();
+        if (value == null) {
+            return "NULL";
+        } else {
+            final StringBuilder builder = new StringBuilder("'");
+            builder.append(value.replace("'", "''"));
+            builder.append("'");
+            return builder.toString();
+        }
     }
 
 }

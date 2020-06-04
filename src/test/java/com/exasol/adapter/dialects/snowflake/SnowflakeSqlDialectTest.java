@@ -25,7 +25,7 @@ import com.exasol.adapter.dialects.SqlDialect.StructureElementSupport;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 
 @ExtendWith(MockitoExtension.class)
-public class SnowflakeSqlDialectTest {
+class SnowflakeSqlDialectTest {
     private SnowflakeSqlDialect dialect;
     @Mock
     private ConnectionFactory connectionFactoryMock;
@@ -38,11 +38,6 @@ public class SnowflakeSqlDialectTest {
     @Test
     void testGetName() {
         assertThat(this.dialect.getName(), equalTo("SNOWFLAKE"));
-    }
-
-    @Test
-    void testGetOneMainCapability() {
-        assertThat(this.dialect.getCapabilities().getMainCapabilities().contains(SELECTLIST_PROJECTION), equalTo(true));
     }
 
     @Test
