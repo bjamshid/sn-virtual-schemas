@@ -3,6 +3,8 @@ package com.exasol.adapter.dialects.snowflake;
 import static com.exasol.adapter.capabilities.AggregateFunctionCapability.*;
 import static com.exasol.adapter.capabilities.LiteralCapability.*;
 import static com.exasol.adapter.capabilities.MainCapability.*;
+import static com.exasol.adapter.capabilities.PredicateCapability.*;
+import static com.exasol.adapter.capabilities.ScalarFunctionCapability.*;
 import static com.exasol.reflect.ReflectionUtils.getMethodReturnViaReflection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -56,9 +58,25 @@ class SnowflakeSqlDialectTest {
     }
 
     @Test
-    void testGetLiteralCapabilitiesLiteral() {
+    void testGetLiteralCapabilities() {
         assertThat(this.dialect.getCapabilities().getLiteralCapabilities(),
                 containsInAnyOrder(NULL, BOOL, DATE, TIMESTAMP, TIMESTAMP_UTC, DOUBLE, EXACTNUMERIC, STRING, INTERVAL));
+    }
+
+    @Test
+    void testGetScalarFunctionCapabilities() {
+        assertThat(this.dialect.getCapabilities().getScalarFunctionCapabilities(),
+                containsInAnyOrder(CAST, ABS, CEIL, ACOS, ASIN, ATAN, ATAN2, COS, COSH, DEGREES, EXP, FLOOR, LN, LOG,
+                        MOD, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TANH, TRUNC, BIT_AND, BIT_NOT, BIT_OR,
+                        BIT_XOR, CHR, CONCAT, LENGTH, LOWER, LPAD, LTRIM, REPLACE, REVERSE, RPAD, RTRIM, SUBSTR, TRIM,
+                        UPPER, CURRENT_DATE, CURRENT_TIMESTAMP, DATE_TRUNC, MINUTE, SECOND, DAY, MONTH, WEEK, YEAR,
+                        REGEXP_REPLACE, HASH_MD5, HASH_SHA1));
+    }
+
+    @Test
+    void testGetCapabilitiesPredicate() {
+        assertThat(this.dialect.getCapabilities().getPredicateCapabilities(), containsInAnyOrder(AND, OR, NOT, EQUAL,
+                NOTEQUAL, LESS, LESSEQUAL, LIKE, REGEXP_LIKE, BETWEEN, IS_NULL, IS_NOT_NULL));
     }
 
     @Test
@@ -71,14 +89,12 @@ class SnowflakeSqlDialectTest {
         assertThat(this.dialect.supportsJdbcSchemas(), equalTo(StructureElementSupport.MULTIPLE));
     }
 
-    @Test // TODO: if 'use schemaname' is executed in the current session then it doesnt need it. question: does it
-          // store the session?
+    @Test
     void testRequiresCatalogQualifiedTableNames() {
         assertThat(this.dialect.requiresCatalogQualifiedTableNames(null), equalTo(false));
     }
 
-    @Test // TODO: if 'use dbname' is executed in the current session then it doesnt need it. question: does it store
-          // the session?
+    @Test
     void testRequiresSchemaQualifiedTableNames() {
         assertThat(this.dialect.requiresSchemaQualifiedTableNames(null), equalTo(false));
     }
