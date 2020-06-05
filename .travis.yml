@@ -8,9 +8,9 @@ matrix:
   include:
     - jdk: openjdk11
 
-addons:
-  sonarcloud:
-    organization: areto
+#addons:
+#  sonarcloud:
+#    organization: areto
 
 before_script:
   - tools/version.sh verify
