@@ -12,8 +12,8 @@ matrix:
 #  sonarcloud:
 #    organization: areto
 
-before_script:
-  - tools/version.sh verify
+#before_script:
+#  - tools/version.sh verify
 
 install:
     - travis_retry mvn dependency:resolve
