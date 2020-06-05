@@ -22,7 +22,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.exasol.adapter.AdapterProperties;
-import com.exasol.adapter.dialects.SqlDialect.NullSorting;
 import com.exasol.adapter.dialects.SqlDialect.StructureElementSupport;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 
@@ -99,11 +98,11 @@ class SnowflakeSqlDialectTest {
         assertThat(this.dialect.requiresSchemaQualifiedTableNames(null), equalTo(false));
     }
 
-    @Test // NULLS_SORTED_AT_START is default for Snowflake unless specified otherwise
-    void testGetDefaultNullSorting() {
-        assertThat(this.dialect.getDefaultNullSorting(), equalTo(NullSorting.NULLS_SORTED_AT_START));
-    }
-
+    /*
+     * @Test void testGetDefaultNullSorting(@Mock final Connection connectionMock) throws SQLException {
+     * Mockito.when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);
+     * assertThat(this.dialect.getDefaultNullSorting(), equalTo(NullSorting.NULLS_SORTED_AT_START)); }
+     */
     @Test
     void testMetadataReaderClass(@Mock final Connection connectionMock) throws SQLException {
         when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);

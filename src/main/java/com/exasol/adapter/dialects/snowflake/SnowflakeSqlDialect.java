@@ -10,6 +10,7 @@ import static com.exasol.adapter.capabilities.ScalarFunctionCapability.*;
 import static com.exasol.adapter.dialects.SqlDialect.StructureElementSupport.MULTIPLE;
 import static com.exasol.adapter.dialects.SqlDialect.StructureElementSupport.SINGLE;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Set;
 
@@ -106,7 +107,16 @@ public class SnowflakeSqlDialect extends AbstractSqlDialect {
 
     @Override
     public NullSorting getDefaultNullSorting() {
-        return NullSorting.NULLS_SORTED_AT_START;
+        try (final Connection connection = this.connectionFactory.getConnection()) {
+            if (connection.getMetaData().nullsAreSortedAtEnd()) {
+                return NullSorting.NULLS_SORTED_AT_END;
+            } else if (connection.getMetaData().nullsAreSortedAtStart()) {
+                return NullSorting.NULLS_SORTED_AT_START;
+            }
+        } catch (final SQLException e) {
+            e.printStackTrace();
+        }
+        return NullSorting.NULLS_SORTED_AT_END;
     }
 
     @Override
