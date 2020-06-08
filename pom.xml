@@ -2,12 +2,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.exasol</groupId>
-    <artifactId>virtual-schema-jdbc-adapter</artifactId>
+    <groupId>areto</groupId>
+    <artifactId>snowlflake-virtual-schema</artifactId>
     <version>${product.version}</version>
-    <name>Virtual Schema JDBC Adapter</name>
+    <name>Snowflake Virtual Schema</name>
     <properties>
-        <product.version>4.0.1</product.version>
+        <product.version>0.1.0</product.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
@@ -132,41 +132,12 @@
             <version>${org.testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${org.testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>oracle-xe</artifactId>
-            <version>${org.testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle.ojdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>19.3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hive</groupId>
-            <artifactId>hive-jdbc</artifactId>
-            <version>3.1.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-server</artifactId>
-            <version>2.2.4</version>
-            <scope>test</scope>
-        </dependency>
+	<!-- https://mvnrepository.com/artifact/net.snowflake/snowflake-jdbc -->
+		<dependency>
+		    <groupId>net.snowflake</groupId>
+		    <artifactId>snowflake-jdbc</artifactId>
+		    <version>3.12.5</version>
+		</dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP-java9ea</artifactId>
@@ -236,7 +207,7 @@
                     <descriptors>
                         <descriptor>assembly/all-dependencies.xml</descriptor>
                     </descriptors>
-                    <finalName>virtualschema-jdbc-adapter-dist-${product.version}</finalName>
+                    <finalName>snowflake-virtual-schema-dist-${product.version}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
@@ -245,27 +216,6 @@
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${surefire.and.failsafe.plugin.version}</version>
-                <configuration>
-                    <!-- Set the highest log level for coverage testing, so that we have a chance to reach branches
-                      <property>	                      in the logging lambdas too. -->
-                    <argLine>-Djava.util.logging.config.file=src/test/resources/logging.properties ${argLine}</argLine>
-                    <includes>
-                        <include>PostgreSQLSqlDialectIT.java</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>
