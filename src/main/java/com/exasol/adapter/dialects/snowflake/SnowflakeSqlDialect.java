@@ -108,15 +108,17 @@ public class SnowflakeSqlDialect extends AbstractSqlDialect {
     @Override
     public NullSorting getDefaultNullSorting() {
         try (final Connection connection = this.connectionFactory.getConnection()) {
-            if (connection.getMetaData().nullsAreSortedAtEnd()) {
-                return NullSorting.NULLS_SORTED_AT_END;
-            } else if (connection.getMetaData().nullsAreSortedAtStart()) {
+            if (connection.getMetaData().nullsAreSortedAtStart()) {
                 return NullSorting.NULLS_SORTED_AT_START;
+            } else if (connection.getMetaData().nullsAreSortedAtEnd()) {
+                return NullSorting.NULLS_SORTED_AT_END;
             }
-        } catch (final SQLException e) {
-            e.printStackTrace();
+        } catch (final Exception exception) {
+            throw new IllegalStateException(
+                    "Unable to determine null sorting order because connection to remote database couldn't be established. ",
+                    exception);
         }
-        return NullSorting.NULLS_SORTED_AT_END;
+        throw new IllegalStateException("Driver doesn't supprot neither NULLS_SORTED_AT_START nor NULLS_SORTED_AT_END");
     }
 
     @Override

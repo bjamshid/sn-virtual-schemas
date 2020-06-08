@@ -10,8 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.exasol.adapter.AdapterProperties;
+import com.exasol.adapter.dialects.SqlDialect.NullSorting;
 import com.exasol.adapter.dialects.SqlDialect.StructureElementSupport;
 import com.exasol.adapter.jdbc.ConnectionFactory;
 
@@ -98,11 +98,24 @@ class SnowflakeSqlDialectTest {
         assertThat(this.dialect.requiresSchemaQualifiedTableNames(null), equalTo(false));
     }
 
-    /*
-     * @Test void testGetDefaultNullSorting(@Mock final Connection connectionMock) throws SQLException {
-     * Mockito.when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);
-     * assertThat(this.dialect.getDefaultNullSorting(), equalTo(NullSorting.NULLS_SORTED_AT_START)); }
-     */
+    @Test
+    void testGetDefaultNullSortingAtStart(@Mock final Connection connectionMock,
+            @Mock final DatabaseMetaData metadataMock) throws SQLException {
+        when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);
+        when(connectionMock.getMetaData()).thenReturn(metadataMock);
+        when(metadataMock.nullsAreSortedAtStart()).thenReturn(true);
+        assertThat(this.dialect.getDefaultNullSorting(), equalTo(NullSorting.NULLS_SORTED_AT_START));
+    }
+
+    @Test
+    void testGetDefaultNullSortingAtEnd(@Mock final Connection connectionMock,
+            @Mock final DatabaseMetaData metadataMock) throws SQLException {
+        when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);
+        when(connectionMock.getMetaData()).thenReturn(metadataMock);
+        when(metadataMock.nullsAreSortedAtEnd()).thenReturn(true);
+        assertThat(this.dialect.getDefaultNullSorting(), equalTo(NullSorting.NULLS_SORTED_AT_END));
+    }
+
     @Test
     void testMetadataReaderClass(@Mock final Connection connectionMock) throws SQLException {
         when(this.connectionFactoryMock.getConnection()).thenReturn(connectionMock);
