@@ -18,10 +18,19 @@ matrix:
 install:
     - travis_retry mvn dependency:resolve
 
-script:
+#script:
 #  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:prepare-agent-integration verify sonar:sonar
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:prepare-agent-integration verify
+#  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:prepare-agent-integration verify
 
 cache:
   directories:
   - "$HOME/.m2"
+
+# added from sonarcloud.io
+addons:
+  sonarcloud:
+    organization: "bjamshid"
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=areto:snowflake-virtual-schema -Dsonar.login=${SONAR_TOKEN}
