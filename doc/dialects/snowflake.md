@@ -49,7 +49,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
     %scriptclass com.exasol.adapter.RequestDispatcher;
-    %jar /buckets/<BFS service>/<bucket>/snowflake-virtual-schema-dist-1.0.0.jar;
+    %jar /buckets/<BFS service>/<bucket>/snowflake-virtual-schema-dist-0.1.0.jar;
     %jar /buckets/<BFS service>/<bucket>/snowflake-jdbc-<JDBC driver version>.jar;
 /
 ;
