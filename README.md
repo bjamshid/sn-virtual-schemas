@@ -1,6 +1,7 @@
 # Virtual Schemas 
 
 <img alt="virtual-schemas logo" src="doc/images/virtual-schemas_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
+
 Build Result:
 [![Build Status](https://travis-ci.org/bjamshid/sn-virtual-schemas.svg?branch=dev)](https://travis-ci.org/bjamshid/sn-virtual-schemas)
 
