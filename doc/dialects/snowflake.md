@@ -68,7 +68,7 @@ IDENTIFIED BY '<access key>';
 
 ## Creating a Virtual Schema
 
-Below you see how the Snowflake Virtual Schema is created. Please note that you have to provide the name of the database in the property `SCHEMA_NAME`.
+Below shows how the Snowflake Virtual Schema is created. Please note that you have to provide the name of the database in connection string (previous step). Don't forget to set the schema property `SCHEMA_NAME`.
 
 ```sql
 CREATE VIRTUAL SCHEMA <virtual schema name>
