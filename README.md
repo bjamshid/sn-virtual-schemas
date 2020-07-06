@@ -1,10 +1,10 @@
 # Virtual Schemas 
 
 <img alt="virtual-schemas logo" src="doc/images/virtual-schemas_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
-
+Build Result:
 [![Build Status](https://travis-ci.org/bjamshid/sn-virtual-schemas.svg?branch=dev)](https://travis-ci.org/bjamshid/sn-virtual-schemas)
 
-SonarCloud results:
+SonarCloud Result:
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=areto%3Asnowflake-virtual-schema&metric=alert_status)](https://sonarcloud.io/dashboard?id=areto%3Asnowflake-virtual-schema)
 
 
