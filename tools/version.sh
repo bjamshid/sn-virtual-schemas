@@ -1,5 +1,5 @@
 #!/bin/bash
-readonly vs_jar_prefix='virtualschema-jdbc-adapter-dist'
+readonly vs_jar_prefix='snowflake-virtual-schema-dist'
 readonly jar_suffix='jar'
 readonly vs_jar_pattern="$vs_jar_prefix-.*\.$jar_suffix"
 readonly root_dir='virtual-schemas'

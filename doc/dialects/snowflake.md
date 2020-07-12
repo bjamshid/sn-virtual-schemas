@@ -20,10 +20,10 @@ You need to specify the following settings when adding the JDBC driver via EXAOp
 
 | Parameter | Value                                               |
 |-----------|-----------------------------------------------------|
-| Name      | `SNOWFLAKE`                                            |
-| Main      | `net.snowflake.client.jdbc.SnowflakeDriver`                     |
-| Prefix    | `jdbc:snowflake:`                                   |
-| Files     | `snowflake-jdbc-<JDBC driver version>.jar`            |
+| Name      | `SNOWFLAKE`                                        |
+| Main      | `net.snowflake.client.jdbc.SnowflakeDriver`    |
+| Prefix    | `jdbc:snowflake:`                                 |
+| Files     | `snowflake-jdbc-<JDBC driver version>.jar`     |
 
 Please refer to the [documentation on configuring JDBC connections to Snowflake](https://docs.snowflake.com/en/user-guide/jdbc-configure.html) for details.
 
@@ -36,7 +36,7 @@ This step is necessary since the UDF container the adapter runs in has no access
 
 ## Installing the Adapter Script
 
-Upload the latest available release of [Virtual Schema JDBC Adapter](https://github.com/exasol/virtual-schemas/releases) to Bucket FS.
+Upload the latest available release of [Virtual Schema JDBC Adapter](https://github.com/bjamshid/sn-virtual-schemas) to Bucket FS.
 
 Then create a schema to hold the adapter script.
 
@@ -49,7 +49,7 @@ The SQL statement below creates the adapter script, defines the Java class that 
 ```sql
 CREATE OR REPLACE JAVA ADAPTER SCRIPT ADAPTER.JDBC_ADAPTER AS
     %scriptclass com.exasol.adapter.RequestDispatcher;
-    %jar /buckets/<BFS service>/<bucket>/virtualschema-jdbc-adapter-dist-4.0.1.jar;
+    %jar /buckets/<BFS service>/<bucket>/snowflake-virtual-schema-dist-0.1.0.jar;
     %jar /buckets/<BFS service>/<bucket>/snowflake-jdbc-<JDBC driver version>.jar;
 /
 ;
@@ -68,7 +68,7 @@ IDENTIFIED BY '<access key>';
 
 ## Creating a Virtual Schema
 
-Below you see how an Snowflake Virtual Schema is created. Please note that you have to provide the name of the database in the property `SHEMA_NAME`.
+Below shows how the Snowflake Virtual Schema is created. Please note that you have to provide the name of the database in connection string (previous step). Don't forget to set the schema property `SCHEMA_NAME`.
 
 ```sql
 CREATE VIRTUAL SCHEMA <virtual schema name>

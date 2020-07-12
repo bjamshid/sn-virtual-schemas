@@ -18,7 +18,7 @@ import com.exasol.adapter.jdbc.BaseColumnMetadataReader;
 import com.exasol.adapter.jdbc.BaseTableMetadataReader;
 
 @ExtendWith(MockitoExtension.class)
-public class SnowflakeMetadataReaderTest {
+class SnowflakeMetadataReaderTest {
     private SnowflakeMetadataReader reader;
     @Mock
     private Connection connectionMock;
