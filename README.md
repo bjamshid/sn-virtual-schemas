@@ -1,4 +1,4 @@
-# Virtual Schemas 
+# Exasol-Snowflake Virtual Schema Adapter 
 
 <img alt="virtual-schemas logo" src="doc/images/virtual-schemas_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
 
